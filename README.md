@@ -16,6 +16,16 @@ In this case:
 * Data is Factual information, especially information organized for analysis or used to reason or make decisions, when this data is presented using a table we call it tabiiar data.
 * Tabular data is any data that can be displayed in an excel sheet or stored in a database.
 
+# Design
+* A table is composed of **rows** and **columns**.
+* Each row is identified by a number (1, 2, 3 ... )
+* Each column is identified by a name ('name', 'email' ...)
+* Intersection between a row and a column is a **cell**.
+* Cells are owner of the displayed **piece of data** (value of a cell, which is visual to the user).
+* A piece of data, in Emberjs terms, is represented as an **attribute** of an Ember-Data **Model object**.
+* The model-object above in is owned by the row.
+* Each column holds information on how to manipulate pieces of data from the model-object.
+* By **manipulate** I mean getting and updating value of a cell.
 
 # Resource
 https://blog.udemy.com/html5-tables
