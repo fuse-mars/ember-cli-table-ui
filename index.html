@@ -19,32 +19,37 @@
     </section>
 
     <section class="main-content">
-      <h3>
-<a id="inspiration" class="anchor" href="#inspiration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inspiration</h3>
+      <h1>
+<a id="ember-cli-table-ui" class="anchor" href="#ember-cli-table-ui" aria-hidden="true"><span class="octicon octicon-link"></span></a>ember-cli-table-ui</h1>
 
-<p>Ember-table addon from Addepar (<a href="https://github.com/Addepar/ember-table">https://github.com/Addepar/ember-table</a>), provides a good solution for Ember-js developers who want to display data in a table.
+<p>Place for describing my design decisions on creating a table component in ember</p>
+
+<h1>
+<a id="inspiration" class="anchor" href="#inspiration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inspiration</h1>
+
+<p>Ember-table addon from Addepar (<a href="https://github.com/Addepar/ember-table">https://github.com/Addepar/ember-table</a>), provides a good solution for emberjs developers who want to display data in a table.
 However, it does not cover a use case of data that needs frequent updates
 i.e. Changes made to a cell value has to be persisted to the backend.</p>
 
 <p>In this case:</p>
 
 <ul>
-<li>Ember-data is being used to communicate with the backend.</li>
-<li>A path to read the cell value is different from a path used to save new/updated value.</li>
+<li>Ember-data is being used to communicate with the backend</li>
+<li>A path to read the cell value is diffrent from a path used to save new/updated value</li>
 <li>
 </ul>
 
-<h3>
-<a id="philosophy" class="anchor" href="#philosophy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Philosophy</h3>
+<h1>
+<a id="philosophy" class="anchor" href="#philosophy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Philosophy</h1>
 
 <ul>
 <li>A table is An HTML structure for creating rows and columns on a Web page. This means that you can use table for multiple reasons, but in our case, a <strong>table</strong> solve a soul purpose of efficiently presenting large number of data.</li>
-<li>Data is Factual information, especially information organized for analysis or used to reason or make decisions, when this data is presented using a table we call it tabular data.</li>
+<li>Data is Factual information, especially information organized for analysis or used to reason or make decisions, when this data is presented using a table we call it tabiiar data.</li>
 <li>Tabular data is any data that can be displayed in an excel sheet or stored in a database.</li>
 </ul>
 
-<h3>
-<a id="design" class="anchor" href="#design" aria-hidden="true"><span class="octicon octicon-link"></span></a>Design</h3>
+<h1>
+<a id="design" class="anchor" href="#design" aria-hidden="true"><span class="octicon octicon-link"></span></a>Design</h1>
 
 <ul>
 <li>A table is composed of <strong>rows</strong> and <strong>columns</strong>.</li>
@@ -52,21 +57,51 @@ i.e. Changes made to a cell value has to be persisted to the backend.</p>
 <li>Each column is identified by a name ('name', 'email' ...)</li>
 <li>Intersection between a row and a column is a <strong>cell</strong>.</li>
 <li>Cells are owner of the displayed <strong>piece of data</strong> (value of a cell, which is visual to the user).</li>
-<li>A piece of data, in Ember-js terms, is represented as an <strong>attribute</strong> of an Ember-Data <strong>Model object</strong>.</li>
+<li>A piece of data, in Emberjs terms, is represented as an <strong>attribute</strong> of an Ember-Data <strong>Model object</strong>.</li>
 <li>The model-object above in is owned by the row.</li>
 <li>Each column holds information on how to manipulate pieces of data from the model-object.</li>
 <li>By <strong>manipulate</strong> I mean getting and updating value of a cell.</li>
 </ul>
 
 <h3>
-<a id="resource" class="anchor" href="#resource" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resource</h3>
+<a id="displaying-piece-of-data" class="anchor" href="#displaying-piece-of-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Displaying piece of data</h3>
 
-<ul>
-<li><a href="https://blog.udemy.com/html5-tables">https://blog.udemy.com/html5-tables</a></li>
-<li><a href="http://webdesign.about.com/od/tables/a/aa122605.htm">http://webdesign.about.com/od/tables/a/aa122605.htm</a></li>
-<li><a href="http://www.echoecho.com/htmltables.htm">http://www.echoecho.com/htmltables.htm</a></li>
-<li><a href="http://www.pcmag.com/encyclopedia/term/44496/html-table">http://www.pcmag.com/encyclopedia/term/44496/html-table</a></li>
-</ul>
+<p>Since this key used to get the actual data out of the owning object, is owned by the column, 
+a refresh ma be needed for cells that receive their data in asynchronous way.</p>
+
+<p>ex:</p>
+
+<pre><code>// contact is the main object
+contact : {
+  id: 0,
+  name: "John Smith",
+  address: 1
+}
+
+address: {
+  id: 1,
+  country: "USA",
+  zip: "00001"
+}
+
+// direct (synchronous) data retrieval
+contact.get("name")
+// future (asynchronous) data retrieval
+contact.get("address.country")
+</code></pre>
+
+<h3>
+<a id="creatingupdating-piece-of-data" class="anchor" href="#creatingupdating-piece-of-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating/Updating piece of data</h3>
+
+<p>With the concept of DDAU, the update of a cell value will have to trigger an action in the <strong>controller</strong> because this controller is the owner of all data and therefore should be responsible of all changes that happen to its data.</p>
+
+<h1>
+<a id="resource" class="anchor" href="#resource" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resource</h1>
+
+<p><a href="https://blog.udemy.com/html5-tables">https://blog.udemy.com/html5-tables</a>
+<a href="http://webdesign.about.com/od/tables/a/aa122605.htm">http://webdesign.about.com/od/tables/a/aa122605.htm</a>
+<a href="http://www.echoecho.com/htmltables.htm">http://www.echoecho.com/htmltables.htm</a>
+<a href="http://www.pcmag.com/encyclopedia/term/44496/html-table">http://www.pcmag.com/encyclopedia/term/44496/html-table</a></p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/fuse-mars/ember-cli-table-ui">Ember-cli Table</a> is maintained by <a href="https://github.com/fuse-mars">fuse-mars</a>.</span>
