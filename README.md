@@ -27,6 +27,35 @@ In this case:
 * Each column holds information on how to manipulate pieces of data from the model-object.
 * By **manipulate** I mean getting and updating value of a cell.
 
+### Displaying piece of data
+Since this key used to get the actual data out of the owning object, is owned by the column, 
+a refresh ma be needed for cells that receive their data in asynchronous way.
+
+ex:
+```
+// contact is the main object
+contact : {
+  id: 0,
+  name: "John Smith",
+  address: 1
+}
+
+address: {
+  id: 1,
+  country: "USA",
+  zip: "00001"
+}
+
+// direct (synchronous) data retrieval
+contact.get("name")
+// future (asynchronous) data retrieval
+contact.get("address.country")
+```
+
+### Creating/Updating piece of data
+With the concept of DDAU, the update of a cell value will have to trigger an action in the **controller** because this controller is the owner of all data and therefore should be responsible of all changes that happen to its data.
+
+
 # Resource
 https://blog.udemy.com/html5-tables
 http://webdesign.about.com/od/tables/a/aa122605.htm
