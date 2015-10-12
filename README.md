@@ -51,6 +51,11 @@ contact.get("name")
 // future (asynchronous) data retrieval
 contact.get("address.country")
 ```
+Note: There is assumption that the path to the data-value is at most 2 keys deep.
+```
+contact.get("address.country") // accepted
+contact.get("address.country.gdp") // non accepted
+```
 
 ### Creating/Updating piece of data
 With the concept of DDAU, the update of a cell value will have to trigger an action in the **controller** because this controller is the owner of all data and therefore should be responsible of all changes that happen to its data.
