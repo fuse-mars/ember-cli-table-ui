@@ -51,7 +51,7 @@ contact.get("name")
 // future (asynchronous) data retrieval
 contact.get("address.country")
 ```
-Note: There is assumption that the path to the data-value is at most 2 keys deep.
+Note: There is assumption that the **path** to the data-value is at most 2 keys deep.
 ```
 contact.get("address.country") // accepted
 contact.get("address.country.gdp") // non accepted
@@ -59,7 +59,11 @@ contact.get("address.country.gdp") // non accepted
 
 ### Creating/Updating piece of data
 With the concept of DDAU, the update of a cell value will have to trigger an action in the **controller** because this controller is the owner of all data and therefore should be responsible of all changes that happen to its data.
-
+* Creating (happens for data whose path is 2 keys deep. i.e. parent object is the direct owner)
+```
+let n = contact.get("name") // contact is direct owner of n
+let c = contact.get("address.country") // contact is not the direct owner of c, direct owner is "address"
+```
 
 # Resource
 https://blog.udemy.com/html5-tables
