@@ -28,8 +28,9 @@ In this case:
 * By **manipulate** I mean getting and updating value of a cell.
 
 ### Displaying piece of data
-Since this key used to get the actual data out of the owning object, is owned by the column, 
-a refresh ma be needed for cells that receive their data in asynchronous way.
+The Column has a path(key with one or more words separated by ".") to the string value of the data,
+Since this key used to get the actual data-value out of the owning object, is owned by the column, 
+a refresh may be needed for cells that receive their data in asynchronous way.
 
 ex:
 ```
@@ -51,11 +52,12 @@ contact.get("name")
 // future (asynchronous) data retrieval
 contact.get("address.country")
 ```
-Note: There is assumption that the **path** to the data-value is at most 2 keys deep.
+Note1: There is assumption that the **path** to the data-value is at most 2 keys deep.
 ```
 contact.get("address.country") // accepted
 contact.get("address.country.gdp") // non accepted
 ```
+Note2: There is assumption that the data is an object or a list of objects of same type.
 
 ### Creating/Updating piece of data
 With the concept of DDAU, the update of a cell value will have to trigger an action in the **controller** because this controller is the owner of all data and therefore should be responsible of all changes that happen to its data.
