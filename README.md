@@ -61,11 +61,15 @@ Note2: There is assumption that the data is an object or a list of objects of sa
 
 ### Creating/Updating piece of data
 With the concept of DDAU, the update of a cell value will have to trigger an action in the **controller** because this controller is the owner of all data and therefore should be responsible of all changes that happen to its data.
+* Saving/Updating varies depending on the data-value displayed in a cell, so if we will have to take into account all possible cases (which we don't know up front), if we give the controller responsible for these actions.
+ * The solution for now is to have the column define a method to create/update the data-object, given a new data-value (since data-objects are of same type in each column). 
+ * There will be a default implementation. However, the user can override it by adding their own implementation during the column definition(i.e. when creating a column object).
 * Creating (happens for data whose path is 2 keys deep. i.e. parent object is the direct owner)
 ```
 let n = contact.get("name") // contact is direct owner of n
 let c = contact.get("address.country") // contact is not the direct owner of c, direct owner is "address"
 ```
+
 
 # Resource
 https://blog.udemy.com/html5-tables
