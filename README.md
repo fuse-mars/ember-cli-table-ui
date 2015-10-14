@@ -70,6 +70,10 @@ let n = contact.get("name") // contact is direct owner of n
 let c = contact.get("address.country") // contact is not the direct owner of c, direct owner is "address"
 ```
 
+### Adding extra information to the cell (ex: last update time, author of this data-value ...)
+This should be done as an external plugin, so that a table can be used as it is. But if the plugin is added, then the table will reflect the changes that this plugin brings.
+* In ember this can be achieved by using `mixins`.
+
 
 # Resource
 https://blog.udemy.com/html5-tables
