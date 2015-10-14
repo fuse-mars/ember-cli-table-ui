@@ -66,8 +66,9 @@ i.e. Changes made to a cell value has to be persisted to the backend.</p>
 <h3>
 <a id="displaying-piece-of-data" class="anchor" href="#displaying-piece-of-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Displaying piece of data</h3>
 
-<p>Since this key used to get the actual data out of the owning object, is owned by the column, 
-a refresh ma be needed for cells that receive their data in asynchronous way.</p>
+<p>The Column has a path(key with one or more words separated by ".") to the string value of the data,
+Since this key used to get the actual data-value out of the owning object, is owned by the column, 
+a refresh may be needed for cells that receive their data in asynchronous way.</p>
 
 <p>ex:</p>
 
@@ -90,10 +91,33 @@ contact.get("name")
 contact.get("address.country")
 </code></pre>
 
+<p>Note1: There is assumption that the <strong>path</strong> to the data-value is at most 2 keys deep.</p>
+
+<pre><code>contact.get("address.country") // accepted
+contact.get("address.country.gdp") // non accepted
+</code></pre>
+
+<p>Note2: There is assumption that the data is an object or a list of objects of same type.</p>
+
 <h3>
 <a id="creatingupdating-piece-of-data" class="anchor" href="#creatingupdating-piece-of-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating/Updating piece of data</h3>
 
 <p>With the concept of DDAU, the update of a cell value will have to trigger an action in the <strong>controller</strong> because this controller is the owner of all data and therefore should be responsible of all changes that happen to its data.</p>
+
+<ul>
+<li>Saving/Updating varies depending on the data-value displayed in a cell, so if we will have to take into account all possible cases (which we don't know up front), if we give the controller responsible for these actions.
+
+<ul>
+<li>The solution for now is to have the column define a method to create/update the data-object, given a new data-value (since data-objects are of same type in each column). </li>
+<li>There will be a default implementation. However, the user can override it by adding their own implementation during the column definition(i.e. when creating a column object).</li>
+</ul>
+</li>
+<li>Creating (happens for data whose path is 2 keys deep. i.e. parent object is the direct owner)</li>
+</ul>
+
+<pre><code>let n = contact.get("name") // contact is direct owner of n
+let c = contact.get("address.country") // contact is not the direct owner of c, direct owner is "address"
+</code></pre>
 
 <h1>
 <a id="resource" class="anchor" href="#resource" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resource</h1>
