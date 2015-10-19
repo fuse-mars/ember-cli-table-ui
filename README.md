@@ -75,6 +75,11 @@ This should be done as an external plugin, so that a table can be used as it is.
 * In ember this can be achieved by using `mixins`.
 
 
+### Extra
+* Row has two parts the view(row component) and the data-holder (row object)
+* Column has two parts the view(column component) and the data-holder (column object)
+* Cell is **only** represented by a component (view and data)
+
 # Resource
 https://blog.udemy.com/html5-tables
 http://webdesign.about.com/od/tables/a/aa122605.htm
